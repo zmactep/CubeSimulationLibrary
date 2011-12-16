@@ -1,6 +1,8 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include "CubeSimulationLibrary_global.h"
+
 #include <stdio.h>
 
 #include "cube.h"
@@ -24,7 +26,7 @@ struct Point3D
   The Map of the Simulation. May be real and subjective.
   Has lots of methods towork with it and syncronise maps.
 */
-class Map
+class CUBESIMULATIONLIBRARYSHARED_EXPORT Map
 {
 private:
   //!  Cubes of the map.

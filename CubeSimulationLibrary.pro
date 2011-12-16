@@ -9,6 +9,8 @@ QT       += opengl
 TARGET = CubeSimulationLib
 TEMPLATE = lib
 
+CONFIG += build_all
+
 DEFINES += CUBESIMULATIONLIBRARY_LIBRARY
 
 SOURCES += cubesimulationlibrary.cpp \

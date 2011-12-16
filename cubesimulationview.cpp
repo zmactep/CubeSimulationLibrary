@@ -13,6 +13,16 @@ CubeSimulationView::CubeSimulationView(QWidget *parent) :
   slot_installRotateMouse();
 }
 
+void CubeSimulationView::loadEnvironment(Environment *env)
+{
+  envPtr = env;
+}
+
+void CubeSimulationView::changeRY(int iry)
+{
+  ry += iry;
+}
+
 
 void CubeSimulationView::slot_installRotateTimer( void )
 {

@@ -50,6 +50,30 @@ Environment::~Environment()
 
 }
 
+Map *Environment::setMap(Map *map)
+{
+  realMap = map;
+  return realMap;
+}
+
+Map *Environment::getMap()
+{
+  return realMap;
+}
+
+Map *Environment::changeMap(Map *map)
+{
+  Map* oldMap = realMap;
+  realMap = map;
+
+  return oldMap;
+}
+
+bool Environment::isStarted()
+{
+  return startFlag;
+}
+
 void Environment::simulationStep( void )
 {
   static int i = 0;
@@ -125,6 +149,14 @@ void Environment::slot_nextStep( void )
 
     emit stateChanged();
   }
+}
+
+void Environment::deleteMap()
+{
+  if(realMap)
+    delete realMap;
+
+  realMap = NULL;
 }
 
 QList<CubeBasic*> Environment::getEnemyAgents( int teamNumber )

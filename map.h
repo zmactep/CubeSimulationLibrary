@@ -139,53 +139,35 @@ public:
     \return current error state
     \sa setError()
   */
-  inline bool isError( void )
-  {
-    return error;
-  }
+  bool isError( void );
 
   //! Set error method.
   /*!
     \return a copy of current map with true error flag
     \sa isError()
   */
-  inline Map setError( void )
-  {
-    Map map = *this;
-
-    map.error = true;
-    return map;
-  }
+  Map setError( void );
 
   //! Get levels count method.
   /*!
     \return a number of map`s levels
     \sa getHeight(), getWidth()
   */
-  inline int getLevels( void )
-  {
-    return levels;
-  }
+  int getLevels( void );
 
   //! Get height method.
   /*!
     \return a map`s height dimension
     \sa getLevels(), getWidth()
   */
-  inline int getHeight( void )
-  {
-    return height;
-  }
+  int getHeight( void );
 
   //! Get width method.
   /*!
     \return a map`s width dimension
     \sa getLevels(), getHeight()
   */
-  inline int getWidth( void )
-  {
-    return width;
-  }
+  int getWidth( void );
 
   // Cube operations
 
@@ -196,13 +178,7 @@ public:
     \param z an integer z-coordinate of Cube
     \return the transparent flag value of given Cube
   */
-  inline bool isTransparent( int x, int y, int z )
-  {
-    if(!checkCubeExists(x,y,z))
-      return false;
-
-    return cubes[y][z][x].isTransparent();
-  }
+  bool isTransparent( int x, int y, int z );
 
   //! Get Cube infection value method.
   /*!
@@ -211,13 +187,7 @@ public:
     \param z an integer z-coordinate of Cube
     \return an infection value of given Cube
   */
-  inline int getInfection( int x, int y, int z )
-  {
-    if(!checkCubeExists(x,y,z))
-      return -1;
-
-    return cubes[y][z][x].getInfection();
-  }
+  int getInfection( int x, int y, int z );
 
   //! Cube infection increment method.
   /*!
@@ -226,13 +196,7 @@ public:
     \param z an integer z-coordinate of Cube
     \return a new infection value of given Cube
   */
-  inline int incInfection( int x, int y, int z )
-  {
-    if(!checkCubeExists(x,y,z))
-      return -1;
-
-    return cubes[y][z][x].incInfection();
-  }
+  int incInfection( int x, int y, int z );
 
   //! Cube infection decrement value method.
   /*!
@@ -241,13 +205,7 @@ public:
     \param z an integer z-coordinate of Cube
     \return a new infection value of given Cube
   */
-  inline int decInfection( int x, int y, int z )
-  {
-    if(!checkCubeExists(x,y,z))
-      return -1;
-
-    return cubes[y][z][x].decInfection();
-  }
+  int decInfection( int x, int y, int z );
 
   //! Get Cube pointer method.
   /*!
@@ -257,13 +215,7 @@ public:
     \return pointer to the given Cube
     \sa getCubeCoord()
   */
-  inline Cube* getCube( int x, int y, int z )
-  {
-    if(!checkCubeExists(x,y,z))
-      return NULL;
-
-    return &cubes[y][z][x];
-  }
+  Cube* getCube( int x, int y, int z );
 
   //! Get Cube coordinates method.
   /*!
@@ -332,15 +284,7 @@ private:
     \return true if coordinates are in the Map and
             false if not
   */
-  inline bool checkCubeExists( int x, int y, int z )
-  {
-    if(y < 0 || y >= levels ||
-       z < 0 || z >= height ||
-       x < 0 || x >= width)
-      return false;
-
-    return true;
-  }
+  bool checkCubeExists( int x, int y, int z );
 };
 
 #endif // MAP_H

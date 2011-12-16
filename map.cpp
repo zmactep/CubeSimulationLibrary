@@ -123,6 +123,74 @@ Cube* Map::getSameCubeFrom( Map* map, CubeBasic* cube )
   return getCube(coord[0], coord[1], coord[2]);
 }
 
+bool Map::isError()
+{
+  return error;
+}
+
+Map Map::setError()
+{
+  Map map = *this;
+
+  map.error = true;
+  return map;
+}
+
+int Map::getLevels()
+{
+  return levels;
+}
+
+int Map::getHeight()
+{
+  return height;
+}
+
+int Map::getWidth()
+{
+  return width;
+}
+
+bool Map::isTransparent(int x, int y, int z)
+{
+  if(!checkCubeExists(x,y,z))
+    return false;
+
+  return cubes[y][z][x].isTransparent();
+}
+
+int Map::getInfection(int x, int y, int z)
+{
+  if(!checkCubeExists(x,y,z))
+    return -1;
+
+  return cubes[y][z][x].getInfection();
+}
+
+int Map::incInfection(int x, int y, int z)
+{
+  if(!checkCubeExists(x,y,z))
+    return -1;
+
+  return cubes[y][z][x].incInfection();
+}
+
+int Map::decInfection(int x, int y, int z)
+{
+  if(!checkCubeExists(x,y,z))
+    return -1;
+
+  return cubes[y][z][x].decInfection();
+}
+
+Cube *Map::getCube(int x, int y, int z)
+{
+  if(!checkCubeExists(x,y,z))
+    return NULL;
+
+  return &cubes[y][z][x];
+}
+
 bool Map::getCubeCoord( CubeBasic* cube, int *coord )
 {
   for( int i = 0; i < levels; i++ )
@@ -201,9 +269,9 @@ void Map::deleteMap()
   if(cubes == NULL)
     return;
 
-  for( int i = 0; i < levels; i++ )
+  for( int i = levels - 1; i >= 0; i-- )
   {
-    for( int j = 0; j < height; j++ )
+    for( int j = height - 1; j >= 0; j-- )
     {
       if(cubes[i][j])
         delete[] cubes[i][j];
@@ -251,6 +319,16 @@ bool Map::getSubMapCoord( int x, int y, int z, int rad, int* coord)
 
   *(coord + 4) = y - dir_up;
   *(coord + 5) = y + dir_down;
+
+  return true;
+}
+
+bool Map::checkCubeExists(int x, int y, int z)
+{
+  if(y < 0 || y >= levels ||
+     z < 0 || z >= height ||
+     x < 0 || x >= width)
+    return false;
 
   return true;
 }

@@ -70,6 +70,16 @@ CubeSimulationWidget::~CubeSimulationWidget()
   env = NULL;
 }
 
+void CubeSimulationWidget::keyPressEvent(QKeyEvent *event)
+{
+  if(event->key() == Qt::Key_D)
+    wgtGL->changeRY(5);
+  else if(event->key() == Qt::Key_A)
+    wgtGL->changeRY(-5);
+
+  qDebug() << "Key pressed!";
+}
+
 void CubeSimulationWidget::initEnvironment( int l, int w, int h )
 {
   AgentManagerFactory facts[2];

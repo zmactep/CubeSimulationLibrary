@@ -30,83 +30,23 @@ private:
   Map *map;
 
 public:
-  AgentManager()
-  {
-    agents = NULL;
-    agentsCount = 0;
+  AgentManager();
 
-    subjMap = NULL;
+  AgentManager( Map *map, AgentFactory *fact, int aCount );
 
-    type = 0;
-  }
+  ~AgentManager();
 
-  AgentManager( Map *map, AgentFactory *fact, int aCount )
-  {
-    createManager(map, fact, aCount);
-  }
+  void setType( int t );
 
-  ~AgentManager()
-  {
-    if(subjMap)
-      delete subjMap;
-    subjMap = NULL;
+  bool createManager( Map *m, AgentFactory *fact, int aCount );
 
-    if(agents)
-      delete[] agents;
-    agents = NULL;
-  }
+  int getAgentsCount( void );
 
-  inline void setType( int t )
-  {
-    type = t;
-  }
+  QList<CubeBasic*> getAgentsList( void );
 
-  inline bool createManager( Map *m, AgentFactory *fact, int aCount )
-  {
-    subjMap = new Map();
-    if(!subjMap)
-      return false;
+  bool getAgentCoords( int agentNum, int* coord );
 
-    agents = fact->createAgents(aCount);
-    if(!agents)
-      return false;
-    agentsCount = aCount;
-
-    type = 0;
-
-    map = m;
-
-    subjMap->copyOf(map);
-
-    return setStartPositions();
-  }
-
-  inline int getAgentsCount( void )
-  {
-    return agentsCount;
-  }
-
-  inline QList<CubeBasic*> getAgentsList( void )
-  {
-    QList<CubeBasic*> list;
-
-    for( int i = 0; i < agentsCount; i++ )
-      list.append(agents[i].getCube());
-
-    return list;
-  }
-
-  inline bool getAgentCoords( int agentNum, int* coord )
-  {
-    return map->getCubeCoord(agents[agentNum].getCube(), coord);
-  }
-
-  inline void setEnemy( QList<CubeBasic*> en )
-  {
-    enemy = en;
-    for( int i = 0; i < enemy.length(); i++ )
-      enemy.replace(i, subjMap->getSameCubeFrom(map, enemy.at(i)));
-  }
+  void setEnemy( QList<CubeBasic*> en );
 
   QList<CubeBasic*> getAgentsRoundPoint( int x, int y, int z );
 
@@ -115,7 +55,6 @@ public:
 protected:
   virtual unsigned char makePlan( int agentNum )
   {
-    //return 0;
     return qrand() % 256;
   }
 

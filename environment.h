@@ -79,11 +79,7 @@ public:
     \return pointer to the new Map
     \sa Environment(), Environment(Map *map) and changeMap()
   */
-  inline Map* setMap( Map* map )
-  {
-    realMap = map;
-    return realMap;
-  }
+  Map* setMap( Map* map );
 
   //! Get Map method.
   /*!
@@ -91,10 +87,7 @@ public:
     \return pointer to theMap
     \sa Environment(), Environment(Map *map) and changeMap()
   */
-  inline Map* getMap( void )
-  {
-    return realMap;
-  }
+  Map* getMap( void );
 
   //!  Map change method.
   /*!
@@ -103,22 +96,13 @@ public:
     \return pointer to the old Map
     \sa Environment(), Environment(Map *map) and setMap()
   */
-  inline Map* changeMap( Map* map )
-  {
-    Map* oldMap = realMap;
-    realMap = map;
-
-    return oldMap;
-  }
+  Map* changeMap( Map* map );
 
   //! Get start flag method.
   /*!
     \return true, if simulation started or false if not
   */
-  inline bool isStarted( void )
-  {
-    return startFlag;
-  }
+  bool isStarted( void );
 
   //! Simlation step method.
   /*!
@@ -171,13 +155,7 @@ private:
     Deletes used Map.
     \sa ~Environment()
   */
-  inline void deleteMap( void )
-  {
-    if(realMap)
-      delete realMap;
-
-    realMap = NULL;
-  }
+  void deleteMap( void );
 
   //! Get enemy agents method.
   /*!

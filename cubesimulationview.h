@@ -42,19 +42,13 @@ public:
     Loads a Enrinment to show.
     \param env an Environment to show
   */
-  inline void loadEnvironment( Environment *env )
-  {
-    envPtr = env;
-  }
+  void loadEnvironment( Environment *env );
 
   //! Change rotatiton.
   /*!
     \param iry addition to rotation rate
   */
-  inline void changeRY( int iry )
-  {
-    ry += iry;
-  }
+  void changeRY( int iry );
 
 signals:
 

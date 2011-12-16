@@ -1,5 +1,83 @@
 #include "agentmanager.h"
 
+AgentManager::AgentManager()
+{
+  agents = NULL;
+  agentsCount = 0;
+
+  subjMap = NULL;
+
+  type = 0;
+}
+
+AgentManager::AgentManager(Map *map, AgentFactory *fact, int aCount)
+{
+  createManager(map, fact, aCount);
+}
+
+AgentManager::~AgentManager()
+{
+  if(subjMap)
+    delete subjMap;
+  subjMap = NULL;
+
+  if(agents)
+    delete[] agents;
+  agents = NULL;
+}
+
+void AgentManager::setType(int t)
+{
+  type = t;
+}
+
+bool AgentManager::createManager(Map *m, AgentFactory *fact, int aCount)
+{
+  subjMap = new Map();
+  if(!subjMap)
+    return false;
+
+  agents = fact->createAgents(aCount);
+  if(!agents)
+    return false;
+  agentsCount = aCount;
+
+  type = 0;
+
+  map = m;
+
+  subjMap->copyOf(map);
+
+  return setStartPositions();
+}
+
+int AgentManager::getAgentsCount()
+{
+  return agentsCount;
+}
+
+QList<CubeBasic *> AgentManager::getAgentsList()
+{
+  QList<CubeBasic*> list;
+
+  for( int i = 0; i < agentsCount; i++ )
+    list.append(agents[i].getCube());
+
+  return list;
+}
+
+bool AgentManager::getAgentCoords(int agentNum, int *coord)
+{
+  return map->getCubeCoord(agents[agentNum].getCube(), coord);
+}
+
+void AgentManager::setEnemy(QList<CubeBasic *> en)
+{
+  enemy = en;
+  for( int i = 0; i < enemy.length(); i++ )
+    enemy.replace(i, subjMap->getSameCubeFrom(map, enemy.at(i)));
+}
+
 QList<CubeBasic*> AgentManager::getAgentsRoundPoint( int x, int y, int z )
 {
   int coord[3];

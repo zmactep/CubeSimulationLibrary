@@ -1,6 +1,8 @@
 #ifndef CUBESIMULATIONVIEW_H
 #define CUBESIMULATIONVIEW_H
 
+#include "CubeSimulationLibrary_global.h"
+
 #include <QtOpenGL>
 #include "map.h"
 #include "environment.h"
@@ -9,7 +11,7 @@
 /*!
   A window, where the simulation is showed using OpenGL.
 */
-class CubeSimulationView : public QGLWidget
+class CUBESIMULATIONLIBRARYSHARED_EXPORT CubeSimulationView : public QGLWidget
 {
   Q_OBJECT
 private:

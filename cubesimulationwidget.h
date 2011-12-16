@@ -1,6 +1,8 @@
 #ifndef CUBESIMULATIONWIDGET_H
 #define CUBESIMULATIONWIDGET_H
 
+#include "CubeSimulationLibrary_global.h"
+
 #include <QtGui>
 
 #include "map.h"
@@ -12,7 +14,7 @@
 /*!
   A main window of the simulation application.
 */
-class CubeSimulationWidget : public QWidget
+class CUBESIMULATIONLIBRARYSHARED_EXPORT CubeSimulationWidget : public QWidget
 {
   Q_OBJECT
 

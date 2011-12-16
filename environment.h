@@ -1,6 +1,8 @@
 #ifndef ENVIRONMENT_H
 #define ENVIRONMENT_H
 
+#include "CubeSimulationLibrary_global.h"
+
 #include <QDebug>
 #include <QThread>
 #include <QTimer>
@@ -23,7 +25,7 @@
   The main Simulation class. It has the real Map and agents managers.
   Gives the agent managers API for actions in the Map.
 */
-class Environment : public QThread
+class CUBESIMULATIONLIBRARYSHARED_EXPORT Environment : public QThread
 {
   Q_OBJECT
 private:

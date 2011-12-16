@@ -1,13 +1,15 @@
 #ifndef CUBE_H
 #define CUBE_H
 
+#include "CubeSimulationLibrary_global.h"
+
 #include "cubebasic.h"
 
 //!  Cube class.
 /*!
   Trivial building block of the Map.
 */
-class Cube : public CubeBasic
+class CUBESIMULATIONLIBRARYSHARED_EXPORT Cube : public CubeBasic
 {
 public:
   //! Constructor.

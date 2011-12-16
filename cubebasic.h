@@ -1,6 +1,8 @@
 #ifndef CUBEBASIC_H
 #define CUBEBASIC_H
 
+#include "CubeSimulationLibrary_global.h"
+
 #include <stdio.h>
 
 //! Maximum infection.
@@ -13,7 +15,7 @@
 /*!
   Trivial building block of the Map. Basic version for agents.
 */
-class CubeBasic
+class CUBESIMULATIONLIBRARYSHARED_EXPORT CubeBasic
 {
 protected:
   //! Infection value.

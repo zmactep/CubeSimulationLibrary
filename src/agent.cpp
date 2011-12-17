@@ -1,4 +1,4 @@
-#include "agent.h"
+#include "headers/agent.h"
 
 bool Agent::makeStepPrivate( Map *map )
 {

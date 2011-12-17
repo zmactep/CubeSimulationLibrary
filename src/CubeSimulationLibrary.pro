@@ -21,18 +21,19 @@ SOURCES += cubesimulationlibrary.cpp \
     agentmanager.cpp \
     agent.cpp
 
-HEADERS += cubesimulationlibrary.h\
-        CubeSimulationLibrary_global.h \
-    map.h \
-    environment.h \
-    cubesimulationwidget.h \
-    cubesimulationview.h \
-    cubebasic.h \
-    cube.h \
-    agentmanagerfactory.h \
-    agentmanager.h \
-    agentfactory.h \
-    agent.h
+HEADERS += headers/cubesimulationlibrary.h\
+    headers/CubeSimulationLibrary_global.h \
+    headers/map.h \
+    headers/environment.h \
+    headers/cubesimulationwidget.h \
+    headers/cubesimulationview.h \
+    headers/cubebasic.h \
+    headers/cube.h \
+    headers/agentmanagerfactory.h \
+    headers/agentmanager.h \
+    headers/agentfactory.h \
+    headers/agent.h
+
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN

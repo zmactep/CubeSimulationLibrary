@@ -1,4 +1,4 @@
-#include "cubesimulationview.h"
+#include "headers/cubesimulationview.h"
 
 CubeSimulationView::CubeSimulationView(QWidget *parent) :
   QGLWidget(parent)

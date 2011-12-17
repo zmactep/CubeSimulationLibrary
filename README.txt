@@ -1,0 +1,1 @@
+Just run build.cmd or build.sh (linux) and be happy of the simulation in /debug and /release folders!

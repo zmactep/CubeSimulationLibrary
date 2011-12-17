@@ -1,4 +1,4 @@
-#include "cubesimulationlibrary.h"
+#include "headers/cubesimulationlibrary.h"
 
 
 CubeSimulationLibrary::CubeSimulationLibrary()

@@ -13,8 +13,8 @@ public:
   CubeSimulationLibrary();
   ~CubeSimulationLibrary();
 
-  void initScene( QString filename, AgentManagerFactory *facts = NULL, int amCount = 0,
-                                    AgentFactory *afacts = NULL, int aCount = 0,
+  void initScene( QString filename, AgentManagerFactory **facts = NULL, int amCount = 0,
+                                    AgentFactory **afacts = NULL, int aCount = 0,
                                     QWidget *parent = 0 );
 
   void showScene( void );

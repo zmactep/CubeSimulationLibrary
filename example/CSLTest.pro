@@ -10,9 +10,12 @@ TARGET = CSLTest
 TEMPLATE = app
 CONFIG += build_all
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    stupidagentmanager.cpp
 
-HEADERS  +=
+HEADERS  += \
+    stupidagentmanager.h \
+    stupidagentmanagerfactory.h
 
 INCLUDEPATH += src/headers
 

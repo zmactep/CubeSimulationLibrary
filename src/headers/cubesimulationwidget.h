@@ -65,8 +65,8 @@ public:
     \param aCount number of Agents per Team
     \param parent a parent object
   */
-  CubeSimulationWidget(QString mapFile, AgentManagerFactory *facts = NULL, int amCount = 0,
-                                        AgentFactory *afacts = NULL, int aCount = 0,
+  CubeSimulationWidget(QString mapFile, AgentManagerFactory **facts = NULL, int amCount = 0,
+                                        AgentFactory **afacts = NULL, int aCount = 0,
                                         QWidget *parent = 0);
 
   //! Destructor.

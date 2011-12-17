@@ -11,7 +11,7 @@ CubeSimulationLibrary::~CubeSimulationLibrary()
     delete widget;
 }
 
-void CubeSimulationLibrary::initScene(QString filename, AgentManagerFactory *facts, int amCount, AgentFactory *afacts, int aCount, QWidget *parent)
+void CubeSimulationLibrary::initScene(QString filename, AgentManagerFactory **facts, int amCount, AgentFactory **afacts, int aCount, QWidget *parent)
 {
   widget = new CubeSimulationWidget(filename, facts, amCount, afacts, aCount, parent);
 }

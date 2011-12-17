@@ -8,8 +8,8 @@ CubeSimulationWidget::CubeSimulationWidget(QWidget *parent)
   init();
 }
 
-CubeSimulationWidget::CubeSimulationWidget(QString mapFile, AgentManagerFactory *facts,
-                                           int amCount, AgentFactory *afacts,
+CubeSimulationWidget::CubeSimulationWidget(QString mapFile, AgentManagerFactory **facts,
+                                           int amCount, AgentFactory **afacts,
                                            int aCount, QWidget *parent)
 {
   QFile fileMap(mapFile);
@@ -82,7 +82,9 @@ void CubeSimulationWidget::keyPressEvent(QKeyEvent *event)
 
 void CubeSimulationWidget::initEnvironment( int l, int w, int h )
 {
-  AgentManagerFactory facts[2];
+  AgentManagerFactory *facts[2];
+  facts[0] = new AgentManagerFactory;
+  facts[1] = new AgentManagerFactory;
 
   map = new Map(l,w,h);
   env = new Environment(map, facts, 2);

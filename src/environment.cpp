@@ -1,7 +1,7 @@
 #include "headers/environment.h"
 
 
-Environment::Environment( Map* map, AgentManagerFactory *facts, int amCount, AgentFactory *afacts, int aCount )
+Environment::Environment( Map* map, AgentManagerFactory **facts, int amCount, AgentFactory **afacts, int aCount )
 {
   realMap = map;
 
@@ -16,13 +16,13 @@ Environment::Environment( Map* map, AgentManagerFactory *facts, int amCount, Age
 
     teams = new AgentManager*[amCount];
     for( int i = 0; i < amCount; i++ ) {
-      teams[i] = facts[i].createManagers(1);
+      teams[i] = facts[i]->createManagers(1);
     }
 
     AgentFactory afact;
     if(afacts != NULL && aCount > 0)
       for( int i = 0; i < amCount; i++ )
-        teams[i]->createManager(realMap, &afacts[i], aCount);
+        teams[i]->createManager(realMap, afacts[i], aCount);
     else
       for( int i = 0; i < amCount; i++ )
         teams[i]->createManager(realMap, &afact, 2);

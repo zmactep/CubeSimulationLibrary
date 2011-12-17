@@ -64,8 +64,8 @@ public:
     \param aCount number of Agents per Team
     \sa Environment(), setMap() and changeMap()
   */
-  Environment( Map* map = NULL, AgentManagerFactory *facts = NULL, int amCount = 0,
-                                AgentFactory *afacts = NULL, int aCount = 0 );
+  Environment( Map* map = NULL, AgentManagerFactory **facts = NULL, int amCount = 0,
+                                AgentFactory **afacts = NULL, int aCount = 0 );
 
   //!  Destructor.
   /*!

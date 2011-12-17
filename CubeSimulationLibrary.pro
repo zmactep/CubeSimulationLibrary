@@ -6,7 +6,7 @@
 
 QT       += opengl
 
-TARGET = CubeSimulationLib
+TARGET = CubeSimulationLibrary
 TEMPLATE = lib
 
 CONFIG += build_all

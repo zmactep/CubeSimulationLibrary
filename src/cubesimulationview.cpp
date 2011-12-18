@@ -176,12 +176,13 @@ void CubeSimulationView::drawBlendCube( float r, float g, float b, float alpha )
 
   glColor4f(r, g, b, alpha);
 
-  if(r < 0.9 && g < 0.9 && b < 0.9)
-  {
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  if(r > 0.9 && g > 0.9 && b > 0.9)
+	return;
+  
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    glBegin(GL_QUADS);
+  glBegin(GL_QUADS);
     // Bottom
     glVertex3f(-0.5, -0.5, -0.5);
     glVertex3f(0.5, -0.5, -0.5);
@@ -217,18 +218,16 @@ void CubeSimulationView::drawBlendCube( float r, float g, float b, float alpha )
     glVertex3f(0.5, 0.5, -0.5);
     glVertex3f(0.5, 0.5, 0.5);
     glVertex3f(0.5, -0.5, 0.5);
-    glEnd();
+  glEnd();
 
-    glDisable(GL_BLEND);
-  }
+  glDisable(GL_BLEND);
 
   // LINES
-
   glColor3f(0.1,0.1,0.1);
 
   glBegin(GL_LINES);
-    glVertex3f(-0.51, -0.51, -0.51);
-    glVertex3f(0.51, -0.51, -0.51);
+	glVertex3f(-0.51, -0.51, -0.51);
+	glVertex3f(0.51, -0.51, -0.51);
 
     glVertex3f(0.51, -0.51, -0.51);
     glVertex3f(0.51, -0.51, 0.51);
@@ -259,7 +258,7 @@ void CubeSimulationView::drawBlendCube( float r, float g, float b, float alpha )
     glVertex3f(0.51, -0.51, -0.51);
     glVertex3f(0.51, 0.51, -0.51);
 
-    glVertex3f(0.51, -0.51, 0.51);
+    glVertex3f(0.51, -0.51, 0.51);\
     glVertex3f(0.51, 0.51, 0.51);
 
     glVertex3f(-0.51, -0.51, 0.51);

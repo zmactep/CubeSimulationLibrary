@@ -93,7 +93,8 @@ QList<CubeBasic*> AgentManager::getAgentsRoundPoint( int x, int y, int z )
         coord[1] >= y - MAX_VIEW_RADIUS && coord[1] <= y + MAX_VIEW_RADIUS &&
         coord[2] >= z - MAX_VIEW_RADIUS && coord[2] <= z + MAX_VIEW_RADIUS )
       if(!list.contains(agents[i].getCube()))
-        list.append(agents[i].getCube());
+        if(agents[i].getHealth())
+          list.append(agents[i].getCube());
   }
 
   return list;

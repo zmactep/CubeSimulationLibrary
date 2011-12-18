@@ -20,52 +20,96 @@ unsigned char HealAgentManager::makePlan(int agentNum)
   qDebug() << "Heal step!";
 
   getAgentCoords(agentNum,coord);
-  int x, y, z;
 
-  Cube *cube = NULL;
 
-  //getAllMapInfo();
-
-  while((!cube || (cube == agents[agentNum].getCube())))
-  {
-    x = qrand() % 3 - 1;
-    z = qrand() % 3 - 1;
-    y = qrand() % 3 - 1;
-
-    if(x > 1)
-      x = 1;
-    if(y > 1)
-      y = 1;
-    if(z > 1)
-      z = 1;
-
-    cube = subjMap->getCube(coord[0] + x, coord[1] + y, coord[2] + z);
-
-    qDebug() << "CUBE: " << cube << coord[0] + x << coord[1] + y << coord[2] + z;
-  }
-  qDebug() << "Transparent: " << cube->isTransparent();
-
+  Cube *cube;
   unsigned char plan = 0;
-  if(z == -1)
+  for( int y = coord[1]-1; y < coord[1]+2; y++ )
+    for( int z = coord[2]-1; z < coord[2]+2; z++ )
+      for( int x = coord[0]-1; x < coord[0]+2; x++ )
+      {
+        cube = subjMap->getCube(x,y,z);
+        if(!cube)
+          continue;
+
+        if(x == coord[0] && y == coord[1] && z == coord[2])
+          continue;
+
+        if(x > coord[0])
+          plan = plan | (1 << 4);
+        else if(x < coord[0])
+          plan = plan | (1 << 5);
+
+        if(y > coord[1])
+          plan = plan | (1 << 2);
+        else if(y < coord[1])
+          plan = plan | (1 << 3);
+
+        if(z > coord[2])
+          plan = plan | (1 << 6);
+        else if(z < coord[2])
+          plan = plan | (1 << 7);
+
+        if(isEnemy(x,y,z))
+        {
+          plan = plan | 3;
+
+          return plan;
+        }
+
+        if(cube->getInfection())
+        {
+          plan = plan | 1;
+
+          return plan;
+        }
+
+        plan = 0;
+      }
+
+
+  int i, j, k;
+  cube = NULL;
+  while(!cube)
+  {
+    i = qrand() % 3 - 1;
+    j = qrand() % 3 - 1;
+    k = qrand() % 3 - 1;
+
+    if(i > 1)
+      i = 1;
+    if(j > 1)
+      j = 1;
+    if(k > 1)
+      k = 1;
+
+    if(!i && !j && !k)
+      continue;
+
+    cube = subjMap->getCube(coord[0] + i, coord[1] + j, coord[2] + k);
+    qDebug() << "CUBE: " << cube << coord[0] + i << coord[1] + j << coord[2] + k;
+    if(!cube)
+      continue;
+
+    if(!cube->isTransparent())
+      cube = NULL;
+  }
+
+  plan = 0;
+  if(k == -1)
     plan = plan | (1 << 7);
-  if(z == 1)
+  if(k == 1)
     plan = plan | (1 << 6);
 
-  if(x == -1)
+  if(i == -1)
     plan = plan | (1 << 5);
-  if(x == 1)
+  if(i == 1)
     plan = plan | (1 << 4);
 
-  if(y == -1)
+  if(j == -1)
     plan = plan | (1 << 3);
-  if(y == 1)
+  if(j == 1)
     plan = plan | (1 << 2);
-
-  if(!cube->isTransparent())
-    plan = plan | (1);
-  else
-    if(isEnemy(coord[0] + x, coord[1] + y, coord[2] + z))
-      plan = plan | 3;
 
   return plan;
 }

@@ -53,6 +53,10 @@ public:
   bool makeStep( void );
 
 protected:
+  virtual void init( void )
+  {
+  }
+
   virtual unsigned char makePlan( int agentNum )
   {
     return qrand() % 256;

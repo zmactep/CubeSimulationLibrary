@@ -78,6 +78,7 @@ void Environment::simulationStep( void )
 {
   static int i = 0;
   static int j = 0;
+  qDebug() << "********************";
   qDebug() << "Turn: " << i;
 
   if(j++ == 5) {

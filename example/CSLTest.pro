@@ -11,11 +11,14 @@ TEMPLATE = app
 CONFIG += build_all
 
 SOURCES += main.cpp \
-    stupidagentmanager.cpp
+    stupidagentmanager.cpp \
+	healagentmanager.cpp
 
 HEADERS  += \
     stupidagentmanager.h \
-    stupidagentmanagerfactory.h
+    stupidagentmanagerfactory.h \
+	healagentmanager.h \
+    healagentmanagerfactory.h
 
 INCLUDEPATH += src/headers
 

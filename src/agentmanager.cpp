@@ -48,6 +48,8 @@ bool AgentManager::createManager(Map *m, AgentFactory *fact, int aCount)
 
   subjMap->copyOf(map);
 
+  init();
+
   return setStartPositions();
 }
 

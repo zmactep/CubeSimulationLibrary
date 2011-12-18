@@ -152,7 +152,7 @@ void AgentManager::kickAgent(int value, int x, int y, int z )
   for( int i = 0; i < agentsCount; i++ )
   {
     int coord[3];
-    subjMap->getCubeCoord(agents[i].getCube(), coord);
+    map->getCubeCoord(agents[i].getCube(), coord);
     if(x == coord[0] && y  == coord[1] && z == coord[2])
       agents[i].decHealth(value);
   }

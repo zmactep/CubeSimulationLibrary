@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
   fact[0] = new HealAgentManagerFactory;
   fact[1] = new StupidAgentManagerFactory;
 
-  lib.initScene("../example/map8.txt", fact, 2);
+  lib.initScene("../example/map5.txt", fact, 2);
 
   // Delete factorys. No memory leaks any more!
   delete fact[1];

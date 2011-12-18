@@ -94,8 +94,11 @@ void Environment::simulationStep( void )
   // Make a kick
   int coord[3];
   if(realMap->getCubeCoord(kickCube, coord))
+  {
+    qDebug() << "Kick at [" << coord[0] << "," << coord[1] << "," << coord[2] << "]";
     for( int k = 0; k < teamCount; k++ )
       teams[k]->kickAgent(AGENT_KICK, coord[0], coord[1], coord[2]);
+  }
   kickCube = NULL;
 
   i++;

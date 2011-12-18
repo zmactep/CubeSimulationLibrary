@@ -24,6 +24,8 @@ unsigned char HealAgentManager::makePlan(int agentNum)
 
   Cube *cube = NULL;
 
+  //getAllMapInfo();
+
   while((!cube || (cube == agents[agentNum].getCube())))
   {
     x = qrand() % 3 - 1;
@@ -63,4 +65,57 @@ unsigned char HealAgentManager::makePlan(int agentNum)
     plan = plan | (1);
 
   return plan;
+}
+
+void HealAgentManager::getAllMapInfo()
+{
+  int l, w, h;
+  l = subjMap->getLevels();
+  w = subjMap->getWidth();
+  h = subjMap->getHeight();
+
+  float *inputs = new float[w*h*l*5];
+
+  QString string = "";
+  int inputsIterator = 0;
+  int infection = 0;
+  for( int i = 0; i < l; i++ )
+    for( int j = 0; j < h; j++ )
+      for( int k = 0; k < w; k++ )
+      {
+        if(!subjMap->getCube(k,i,j))
+        {
+          qDebug() << "SHIT!";
+          continue;
+        }
+
+        inputs[inputsIterator++] = subjMap->isTransparent(k,i,j);
+        string = string + QString("%1").arg(inputs[inputsIterator-1]);
+        inputs[inputsIterator++] = isEnemy(k,i,j);
+        string = string + QString("%1").arg(inputs[inputsIterator-1]);
+
+        infection = subjMap->getInfection(k,i,j);
+        inputs[inputsIterator++] = (infection >> 2) & 0x1;
+        string = string + QString("%1").arg(inputs[inputsIterator-1]);
+        inputs[inputsIterator++] = (infection >> 1) & 0x1;
+        string = string + QString("%1").arg(inputs[inputsIterator-1]);
+        inputs[inputsIterator++] = (infection) & 0x1;
+        string = string + QString("%1").arg(inputs[inputsIterator-1]);
+      }
+
+
+  delete inputs;
+}
+
+bool HealAgentManager::isEnemy(int x, int y, int z)
+{
+  int buf[3];
+  for( int i = 0; i < enemy.length(); i++ )
+  {
+    subjMap->getCubeCoord(enemy[i], buf);
+    if(buf[0] == x && buf[1] == y && buf[2] == z)
+      return true;
+  }
+
+  return false;
 }

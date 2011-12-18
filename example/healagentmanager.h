@@ -12,6 +12,10 @@ public:
 protected:
   void init( void );
   unsigned char makePlan( int agentNum );
+
+private:
+  void getAllMapInfo( void );
+  bool isEnemy (int x, int y, int z);
 };
 
 #endif // HEALAGENTMANAGER_H

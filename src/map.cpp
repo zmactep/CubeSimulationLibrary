@@ -10,6 +10,7 @@ Map::Map()
 
 Map::Map( int l, int w, int h )
 {
+  cubes = NULL;
   createMap(l, w, h);
 }
 
@@ -68,43 +69,75 @@ bool Map::loadLevelMask( int l, bool** flags )
 
 Map* Map::getSubMap( int x, int y, int z, int rad )
 {
-  int coord[6];
+  int *coord;
+  coord = new int[6];
   if(!getSubMapCoord(x,y,z,rad,coord))
+  {
+    delete coord;
     return NULL;
+  }
 
   // Set transparent and infection in new map
-  Map *map = new Map(coord[5] - coord[4],
-                     coord[3] - coord[2],
-                     coord[1] - coord[0]);
+  Map *map = new Map(coord[5] - coord[4] + 1,
+                     coord[3] - coord[2] + 1,
+                     coord[1] - coord[0] + 1);
 
-  for( int i = coord[4]; i < coord[5]; i++ )
-    for( int j = coord[2]; j < coord[3]; j++ )
-      for( int k = coord[0]; k < coord[1]; k++ )
+  if(!map)
+  {
+    delete coord;
+    return NULL;
+  }
+
+  for( int i = coord[4]; i <= coord[5]; i++ )
+    for( int j = coord[2]; j <= coord[3]; j++ )
+      for( int k = coord[0]; k <= coord[1]; k++ )
       {
-        map->cubes[i-coord[4]][j-coord[2]][k-coord[0]].setTransparent(
-                                            cubes[i][j][k].isTransparent());
-        map->cubes[i-coord[4]][j-coord[2]][k-coord[0]].setInfection(
-                                            cubes[i][j][k].getInfection());
+        Cube *cubeT, *cubeO;
+        cubeT = getCube(k, i, j);
+        cubeO = map->getCube(k-coord[0], i-coord[4], j-coord[2]);
+        if(cubeT && cubeO)
+        {
+          cubeO->setInfection(cubeT->getInfection());
+          cubeO->setTransparent(cubeT->isTransparent());
+        }
       }
 
+  delete coord;
   return map;
 }
 
 bool Map::appendSubMap( Map* app_map,
                         int x, int y, int z, int rad )
 {
-  int coord[6];
+  int *coord;
+  coord = new int[6];
   if(!getSubMapCoord(x,y,z,rad,coord))
+  {
+    delete coord;
     return false;
+  }
 
-  for( int i = coord[4]; i < coord[5]; i++ )
-    for( int j = coord[2]; j < coord[3]; j++ )
-      for( int k = coord[0]; k < coord[1]; k++ )
+  if(!app_map)
+  {
+    delete coord;
+    return false;
+  }
+
+  for( int i = coord[4]; i <= coord[5]; i++ )
+    for( int j = coord[2]; j <= coord[3]; j++ )
+      for( int k = coord[0]; k <= coord[1]; k++ )
       {
-        cubes[i][j][k].setTransparent(app_map->cubes[i-coord[04]][j-coord[2]][k-coord[0]].isTransparent());
-        cubes[i][j][k].setInfection(app_map->cubes[i-coord[04]][j-coord[2]][k-coord[0]].getInfection());
+        Cube *cubeT, *cubeO;
+        cubeO = getCube(k, i, j);
+        cubeT = app_map->getCube(k-coord[0], i-coord[4], j-coord[2]);
+        if(cubeT && cubeO)
+        {
+          cubeO->setInfection(cubeT->getInfection());
+          cubeO->setTransparent(cubeT->isTransparent());
+        }
       }
 
+  delete coord;
   return true;
 }
 
@@ -228,6 +261,9 @@ bool Map::createMap( int l, int w, int h )
   levels = l;
   error = false;
 
+  if(cubes)
+    deleteMap();
+  
   cubes = new Cube**[levels];
   if(!cubes)
   {
@@ -301,7 +337,7 @@ bool Map::getSubMapCoord( int x, int y, int z, int rad, int* coord)
       dir_up,             //  u l-1
       dir_down;           //  d l+1
 
-  dir_nord = z - rad >= 0 ? rad : z;
+  dir_nord = z - rad >= 0 ? rad : z ;
   dir_south = z + rad <= height - 1 ? rad : (height - 1) - z;
 
   dir_west = x - rad >= 0 ? rad : x;

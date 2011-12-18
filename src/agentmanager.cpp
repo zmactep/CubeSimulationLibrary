@@ -107,17 +107,17 @@ bool AgentManager::makeStep( void )
   else
   {
     ///////////////////////////////////////////////////////////
-    qDebug() << "BSGM";
     Map* tmpMap = map->getSubMap(a_coord[0], a_coord[1],
                                  a_coord[2], MAX_VIEW_RADIUS);
-    qDebug() << "BSAM";
     subjMap->appendSubMap(tmpMap, a_coord[0], a_coord[1],
                                   a_coord[2], MAX_VIEW_RADIUS);
-    qDebug() << "BSD";
-    delete tmpMap;
+    if(tmpMap)
+    {
+      delete tmpMap;
+      tmpMap = NULL;
+    }
 
     ///////////////////////////////////////////////////////////
-    qDebug() << "STEP";
     if(type == MANAGER_TYPE)
       agents[a_step].setPlan(makePlan(a_step));
     else
@@ -126,18 +126,19 @@ bool AgentManager::makeStep( void )
     agents[a_step].makeStep(map);
 
     ///////////////////////////////////////////////////////////
-    qDebug() << "ASGM";
     tmpMap = map->getSubMap(a_coord[0], a_coord[1],
                             a_coord[2], MAX_VIEW_RADIUS);
-    qDebug() << "ASAM";
     subjMap->appendSubMap(tmpMap, a_coord[0], a_coord[1],
                                   a_coord[2], MAX_VIEW_RADIUS);
-    qDebug() << "ASD";
-    delete tmpMap;
+    if(!tmpMap)
+    {
+      delete tmpMap;
+      tmpMap = NULL;
+    }
   }
 
   a_step++;
-  if(a_step >= agentsCount)
+  if(a_step > agentsCount)
     a_step = 0;
 
   return flag;

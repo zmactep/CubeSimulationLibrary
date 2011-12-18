@@ -63,6 +63,9 @@ unsigned char HealAgentManager::makePlan(int agentNum)
 
   if(!cube->isTransparent())
     plan = plan | (1);
+  else
+    if(isEnemy(coord[0] + x, coord[1] + y, coord[2] + z))
+      plan = plan | 3;
 
   return plan;
 }
@@ -85,7 +88,7 @@ void HealAgentManager::getAllMapInfo()
       {
         if(!subjMap->getCube(k,i,j))
         {
-          qDebug() << "SHIT!";
+          qDebug() << "Cube error!";
           continue;
         }
 
@@ -102,7 +105,6 @@ void HealAgentManager::getAllMapInfo()
         inputs[inputsIterator++] = (infection) & 0x1;
         string = string + QString("%1").arg(inputs[inputsIterator-1]);
       }
-
 
   delete inputs;
 }

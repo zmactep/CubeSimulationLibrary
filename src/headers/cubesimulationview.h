@@ -28,7 +28,7 @@ private:
 
 // Some rotate stuff
   bool isRotateMouse;
-  int ry;
+  int ry, rx;
 
 public:
   //! Constructor.
@@ -46,11 +46,17 @@ public:
   */
   void loadEnvironment( Environment *env );
 
-  //! Change rotatiton.
+  //! Change rotatiton Y.
   /*!
     \param iry addition to rotation rate
   */
   void changeRY( int iry );
+
+  //! Change rotatiton X.
+  /*!
+    \param irx addition to rotation rate
+  */
+  void changeRX( int irx );
 
 signals:
 

@@ -52,6 +52,8 @@ public:
 
   bool makeStep( void );
 
+  void kickAgent( int value, int x, int y, int z );
+
 protected:
   virtual void init( void )
   {

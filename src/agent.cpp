@@ -1,4 +1,5 @@
 #include "headers/agent.h"
+#include "headers/environment.h"
 
 bool Agent::makeStepPrivate( Map *map )
 {
@@ -39,6 +40,7 @@ bool Agent::makeStepPrivate( Map *map )
     qDebug() << "Action KILL";
     if(cube == NULL || !cube->isTransparent())
       return false;
+    Environment::kickCube = (Cube*)cube;
     qDebug() << "OK!";
   }
   else if(ACTION_GO(agentPlan))

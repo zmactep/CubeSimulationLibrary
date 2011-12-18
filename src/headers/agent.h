@@ -2,6 +2,7 @@
 #define AGENT_H
 
 #define MAX_HEALTH 100
+#define AGENT_KICK 20
 
 #include "CubeSimulationLibrary_global.h"
 

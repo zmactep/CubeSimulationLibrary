@@ -63,7 +63,8 @@ QList<CubeBasic *> AgentManager::getAgentsList()
   QList<CubeBasic*> list;
 
   for( int i = 0; i < agentsCount; i++ )
-    list.append(agents[i].getCube());
+    if(agents[i].getHealth())
+      list.append(agents[i].getCube());
 
   return list;
 }
@@ -104,7 +105,7 @@ bool AgentManager::makeStep( void )
   int a_coord[3];
   bool flag = true;
 
-  if(!map->getCubeCoord(agents[a_step].getCube(), a_coord))
+  if(!map->getCubeCoord(agents[a_step].getCube(), a_coord) || !agents[a_step].getHealth())
     flag = false;
   else
   {
@@ -144,6 +145,17 @@ bool AgentManager::makeStep( void )
     a_step = 0;
 
   return flag;
+}
+
+void AgentManager::kickAgent(int value, int x, int y, int z )
+{
+  for( int i = 0; i < agentsCount; i++ )
+  {
+    int coord[3];
+    subjMap->getCubeCoord(agents[i].getCube(), coord);
+    if(x == coord[0] && y  == coord[1] && z == coord[2])
+      agents[i].decHealth(value);
+  }
 }
 
 bool AgentManager::setStartPositions( void )

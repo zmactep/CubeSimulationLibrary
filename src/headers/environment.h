@@ -54,6 +54,12 @@ private:
   int teamCount;
 
 public:
+  //! Cube, which will be kicked
+  /*!
+    The Cube, agents in which will be kicked.
+  */
+  static Cube *kickCube;
+
   //!  Map setup constructor.
   /*!
     Creates Environment with given Map. Creates two teams.

@@ -76,6 +76,10 @@ void CubeSimulationWidget::keyPressEvent(QKeyEvent *event)
     wgtGL->changeRY(5);
   else if(event->key() == Qt::Key_A)
     wgtGL->changeRY(-5);
+  else if(event->key() == Qt::Key_W)
+    wgtGL->changeRX(5);
+  else if(event->key() == Qt::Key_S)
+    wgtGL->changeRX(-5);
 
   qDebug() << "Key pressed!";
 }

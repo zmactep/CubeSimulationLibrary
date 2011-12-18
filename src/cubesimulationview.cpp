@@ -5,7 +5,7 @@ CubeSimulationView::CubeSimulationView(QWidget *parent) :
 {
   envPtr = NULL;
 
-  ry = 0;
+  ry = rx = 0;
 
   isRotateMouse = false;
   isRotateTimer = false;
@@ -21,6 +21,11 @@ void CubeSimulationView::loadEnvironment(Environment *env)
 void CubeSimulationView::changeRY(int iry)
 {
   ry += iry;
+}
+
+void CubeSimulationView::changeRX(int irx)
+{
+  rx += irx;
 }
 
 
@@ -76,7 +81,10 @@ void CubeSimulationView::paintGL( void )
       glRotatef(0.1*sceneTime, 0, 1, 0);
 
     if(isRotateMouse)
+    {
       glRotatef(ry, 0, 1, 0);
+      glRotatef(rx, 1, 0, 0);
+    }
 
     glScalef(1.5,1.5,1.5);
     drawMap();

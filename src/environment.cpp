@@ -1,5 +1,6 @@
 #include "headers/environment.h"
 
+Cube *Environment::kickCube = NULL;
 
 Environment::Environment( Map* map, AgentManagerFactory **facts, int amCount, AgentFactory **afacts, int aCount )
 {
@@ -25,7 +26,8 @@ Environment::Environment( Map* map, AgentManagerFactory **facts, int amCount, Ag
         teams[i]->createManager(realMap, afacts[i], aCount);
     else
       for( int i = 0; i < amCount; i++ )
-        teams[i]->createManager(realMap, &afact, 2);
+        teams[i]->createManager(realMap, &afact,
+                                (map->getLevels() + map->getHeight() + map->getWidth())/6);
   }
 //  connect(this, SIGNAL(stateChanged()), this, SLOT(slot_nextStep()));
   start();
@@ -88,6 +90,13 @@ void Environment::simulationStep( void )
 
   teams[i]->setEnemy(getEnemyAgents(i));
   teams[i]->makeStep();
+
+  // Make a kick
+  int coord[3];
+  if(realMap->getCubeCoord(kickCube, coord))
+    for( int k = 0; k < teamCount; k++ )
+      teams[k]->kickAgent(AGENT_KICK, coord[0], coord[1], coord[2]);
+  kickCube = NULL;
 
   i++;
   if(i > teamCount-1)

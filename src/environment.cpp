@@ -1,6 +1,6 @@
 #include "headers/environment.h"
 
-Cube *Environment::kickCube = NULL;
+QList<Cube*> *Environment::kickCube = new QList<Cube*>();
 
 Environment::Environment( Map* map, AgentManagerFactory **facts, int amCount, AgentFactory **afacts, int aCount )
 {
@@ -50,6 +50,8 @@ Environment::~Environment()
     delete teams;
   teams = NULL;
 
+
+  delete kickCube;
 }
 
 Map *Environment::setMap(Map *map)
@@ -92,14 +94,19 @@ void Environment::simulationStep( void )
   teams[i]->makeStep();
 
   // Make a kick
-  int coord[3];
-  if(realMap->getCubeCoord(kickCube, coord))
+  for( int c = 0; c < kickCube->size(); c++ )
   {
-    qDebug() << "Kick at [" << coord[0] << "," << coord[1] << "," << coord[2] << "]";
-    for( int k = 0; k < teamCount; k++ )
-      teams[k]->kickAgent(AGENT_KICK, coord[0], coord[1], coord[2]);
+    Cube *cube = kickCube->at(c);
+    int coord[3];
+
+    if(realMap->getCubeCoord(cube, coord))
+    {
+      qDebug() << "Kick at [" << coord[0] << "," << coord[1] << "," << coord[2] << "]";
+      for( int k = 0; k < teamCount; k++ )
+        teams[k]->kickAgent(AGENT_KICK, coord[0], coord[1], coord[2]);
+    }
   }
-  kickCube = NULL;
+  kickCube->clear();
 
   i++;
   if(i > teamCount-1)

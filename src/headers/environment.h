@@ -58,7 +58,7 @@ public:
   /*!
     The Cube, agents in which will be kicked.
   */
-  static Cube *kickCube;
+  static QList<Cube*> *kickCube;
 
   //!  Map setup constructor.
   /*!

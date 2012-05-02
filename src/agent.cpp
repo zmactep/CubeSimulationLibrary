@@ -40,7 +40,7 @@ bool Agent::makeStepPrivate( Map *map )
     qDebug() << "Action KILL";
     if(cube == NULL || !cube->isTransparent())
       return false;
-    Environment::kickCube = (Cube*)cube;
+    Environment::kickCube->push_back((Cube*)cube);
     qDebug() << "OK!";
   }
   else if(ACTION_GO(agentPlan))

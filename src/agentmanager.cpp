@@ -103,43 +103,19 @@ QList<CubeBasic*> AgentManager::getAgentsRoundPoint( int x, int y, int z )
 bool AgentManager::makeStep( void )
 {
   static int a_step = 0;
-  int a_coord[3];
   bool flag = true;
 
-  if(!map->getCubeCoord(agents[a_step].getCube(), a_coord) || !agents[a_step].getHealth())
-    flag = false;
-  else
+  if(type == AGENT_PARALLEL_TYPE)
   {
-    ///////////////////////////////////////////////////////////
-    Map* tmpMap = map->getSubMap(a_coord[0], a_coord[1],
-                                 a_coord[2], MAX_VIEW_RADIUS);
-    subjMap->appendSubMap(tmpMap, a_coord[0], a_coord[1],
-                                  a_coord[2], MAX_VIEW_RADIUS);
-    if(tmpMap)
-    {
-      delete tmpMap;
-      tmpMap = NULL;
+    for( int i = 0; i < agentsCount; i++ ) {
+      flag = flag && singleStep(i);
     }
 
-    ///////////////////////////////////////////////////////////
-    if(type == MANAGER_TYPE)
-      agents[a_step].setPlan(makePlan(a_step));
-    else
-      agents[a_step].makePlan(subjMap, enemy);
-
-    agents[a_step].makeStep(map);
-
-    ///////////////////////////////////////////////////////////
-    tmpMap = map->getSubMap(a_coord[0], a_coord[1],
-                            a_coord[2], MAX_VIEW_RADIUS);
-    subjMap->appendSubMap(tmpMap, a_coord[0], a_coord[1],
-                                  a_coord[2], MAX_VIEW_RADIUS);
-    if(!tmpMap)
-    {
-      delete tmpMap;
-      tmpMap = NULL;
-    }
+    return flag;
   }
+
+
+  singleStep(a_step);
 
   a_step++;
   if(a_step > agentsCount)
@@ -183,4 +159,48 @@ bool AgentManager::setStartPositions( void )
   }
 
   return true;
+}
+
+bool AgentManager::singleStep( int a_step )
+{
+  int a_coord[3];
+  bool flag = true;
+
+  if(!map->getCubeCoord(agents[a_step].getCube(), a_coord) || !agents[a_step].getHealth())
+    flag = false;
+  else
+  {
+    ///////////////////////////////////////////////////////////
+    Map* tmpMap = map->getSubMap(a_coord[0], a_coord[1],
+                                 a_coord[2], MAX_VIEW_RADIUS);
+    subjMap->appendSubMap(tmpMap, a_coord[0], a_coord[1],
+                                  a_coord[2], MAX_VIEW_RADIUS);
+
+    ///////////////////////////////////////////////////////////
+    if(type == MANAGER_TYPE)
+      agents[a_step].setPlan(makePlan(a_step));
+    else
+      agents[a_step].makePlan(tmpMap, enemy);
+
+    agents[a_step].makeStep(map);
+
+    if(tmpMap)
+    {
+      delete tmpMap;
+      tmpMap = NULL;
+    }
+
+    ///////////////////////////////////////////////////////////
+    tmpMap = map->getSubMap(a_coord[0], a_coord[1],
+                            a_coord[2], MAX_VIEW_RADIUS);
+    subjMap->appendSubMap(tmpMap, a_coord[0], a_coord[1],
+                                  a_coord[2], MAX_VIEW_RADIUS);
+    if(!tmpMap)
+    {
+      delete tmpMap;
+      tmpMap = NULL;
+    }
+  }
+
+  return flag;
 }

@@ -11,8 +11,9 @@
 
 #include "map.h"
 
-#define MANAGER_TYPE 0
-#define AGENT_TYPE   1
+#define MANAGER_TYPE          0
+#define AGENT_TYPE            1
+#define AGENT_PARALLEL_TYPE   2
 
 class CUBESIMULATIONLIBRARYSHARED_EXPORT AgentManager
 {
@@ -66,6 +67,7 @@ protected:
 
 private:
   bool setStartPositions( void );
+  bool singleStep( int a_step );
 };
 
 #endif // AGENTMANAGER_H

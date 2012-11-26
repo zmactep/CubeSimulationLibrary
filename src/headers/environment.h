@@ -138,6 +138,18 @@ signals:
   */
   void stateChanged( void );
 
+  //! Simulation end signal.
+  /*!
+    One team is killed and map is clear
+  */
+  void simulationEnd( int value );
+
+  //! One team killed signal.
+  /*!
+    One team is killed
+  */
+  void simulationKill( int value );
+
 public slots:
   //! Force state change slot.
   /*!

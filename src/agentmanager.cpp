@@ -7,6 +7,8 @@ AgentManager::AgentManager()
 
   subjMap = NULL;
 
+  current_agent = 0;
+
   type = 0;
 }
 
@@ -17,6 +19,8 @@ AgentManager::AgentManager(Map *map, AgentFactory *fact, int aCount)
 
 AgentManager::~AgentManager()
 {
+  qDebug() << "Delete AgentManager";
+
   if(subjMap)
     delete subjMap;
   subjMap = NULL;
@@ -40,6 +44,7 @@ bool AgentManager::createManager(Map *m, AgentFactory *fact, int aCount)
   agents = fact->createAgents(aCount);
   if(!agents)
     return false;
+
   agentsCount = aCount;
 
   type = 0;
@@ -47,6 +52,8 @@ bool AgentManager::createManager(Map *m, AgentFactory *fact, int aCount)
   map = m;
 
   subjMap->copyOf(map);
+
+  current_agent = 0;
 
   init();
 
@@ -102,8 +109,9 @@ QList<CubeBasic*> AgentManager::getAgentsRoundPoint( int x, int y, int z )
 
 bool AgentManager::makeStep( void )
 {
-  static int a_step = 0;
   bool flag = true;
+
+  qDebug() << "Agent's" << current_agent << "step!";
 
   if(type == AGENT_PARALLEL_TYPE)
   {
@@ -115,11 +123,11 @@ bool AgentManager::makeStep( void )
   }
 
 
-  singleStep(a_step);
+  singleStep(current_agent);
 
-  a_step++;
-  if(a_step > agentsCount)
-    a_step = 0;
+  current_agent++;
+  if(current_agent > agentsCount)
+    current_agent = 0;
 
   return flag;
 }
@@ -180,7 +188,7 @@ bool AgentManager::singleStep( int a_step )
     if(type == MANAGER_TYPE)
       agents[a_step].setPlan(makePlan(a_step));
     else
-      agents[a_step].makePlan(tmpMap, enemy);
+      agents[a_step].setPlan(agents[a_step].makePlan(subjMap, enemy, a_coord));
 
     agents[a_step].makeStep(map);
 

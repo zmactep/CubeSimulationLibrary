@@ -92,7 +92,7 @@ public:
     \param enemy cubes with enemy
     \return an encoded plan
   */
-  virtual unsigned char makePlan( Map* map, QList<CubeBasic*> enemy )
+  virtual unsigned char makePlan( Map* map, QList<CubeBasic*> enemy, int coord[] )
   {
     agentPlan = 0;
     return agentPlan;

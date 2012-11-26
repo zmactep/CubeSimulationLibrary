@@ -25,6 +25,8 @@ protected:
 
   int type;
 
+  int current_agent;
+
   QList<CubeBasic*> enemy;
 
 private:

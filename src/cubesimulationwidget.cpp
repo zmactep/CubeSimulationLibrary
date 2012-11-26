@@ -112,6 +112,11 @@ void CubeSimulationWidget::slot_toggleSimulation( void )
     toggleButton->setText("Start");
 }
 
+void CubeSimulationWidget::slot_updateTitle( int value )
+{
+  setWindowTitle(QString("Time: ") + QString().setNum(value));
+}
+
 void CubeSimulationWidget::init( void )
 {
   QVBoxLayout *play = new QVBoxLayout(this);
@@ -120,6 +125,8 @@ void CubeSimulationWidget::init( void )
   wgtGL->loadEnvironment(env);
 
   connect(env, SIGNAL(stateChanged()), wgtGL, SLOT(updateGL()));
+//  connect(env, SIGNAL(simulationKill(int)), this, SLOT(slot_updateTitle(int)));
+  connect(env, SIGNAL(simulationEnd(int)), this, SLOT(slot_updateTitle(int)));
 
   QHBoxLayout *playControls = new QHBoxLayout(this);
   toggleButton = new QPushButton(tr("Start"), this);

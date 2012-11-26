@@ -8,17 +8,20 @@ QT       += core gui opengl
 
 TARGET = CSLTest
 TEMPLATE = app
-CONFIG += build_all
+CONFIG += build_all console
 
 SOURCES += main.cpp \
     stupidagentmanager.cpp \
-	healagentmanager.cpp
+	healagentmanager.cpp \
+    healagent.cpp
 
 HEADERS  += \
     stupidagentmanager.h \
     stupidagentmanagerfactory.h \
 	healagentmanager.h \
-    healagentmanagerfactory.h
+    healagentmanagerfactory.h \
+    healagent.h \
+    healagentfactory.h
 
 INCLUDEPATH += src/headers
 

@@ -1,4 +1,5 @@
 #include "headers/environment.h"
+#include <iostream>
 
 QList<Cube*> *Environment::kickCube = new QList<Cube*>();
 
@@ -23,11 +24,32 @@ Environment::Environment( Map* map, AgentManagerFactory **facts, int amCount, Ag
     AgentFactory afact;
     if(afacts != NULL && aCount > 0)
       for( int i = 0; i < amCount; i++ )
-        teams[i]->createManager(realMap, afacts[i], aCount);
+      {
+      //  teams[i]->createManager(realMap, afacts[i], aCount);
+        // FOR TEST ONLY
+        int ac_m = 4;
+
+        if(i == 0)
+          ac_m = 15;
+        else
+          ac_m = 4;
+        teams[i]->createManager(realMap, afacts[i], ac_m);
+      }
     else
       for( int i = 0; i < amCount; i++ )
+      {
         teams[i]->createManager(realMap, &afact,
                                 (map->getLevels() + map->getHeight() + map->getWidth())/6);
+
+        // FOR TEST ONLY
+//        int ac_m = 4;
+
+//        if(i == 0)
+//          ac_m = 10;
+//        else
+//          ac_m = 4;
+//        teams[i]->createManager(realMap, &afact, ac_m);
+      }
   }
 //  connect(this, SIGNAL(stateChanged()), this, SLOT(slot_nextStep()));
   start();
@@ -38,16 +60,8 @@ Environment::~Environment()
   qDebug() << "Delete Environment";
   deleteMap();
 
-  if(teams[0])
-    delete teams[0];
-  teams[0] = NULL;
-
-  if(teams[1])
-    delete teams[1];
-  teams[1] = NULL;
-
   if(teams)
-    delete teams;
+    delete[] teams;
   teams = NULL;
 
 
@@ -80,6 +94,9 @@ bool Environment::isStarted()
 
 void Environment::simulationStep( void )
 {
+  static bool stop_flag = false;
+  static int  stop_counter = 0;
+
   static int i = 0;
   static int j = 0;
   qDebug() << "********************";
@@ -90,8 +107,12 @@ void Environment::simulationStep( void )
     j = 0;
   }
 
+  qDebug() << "Step started!";
+
   teams[i]->setEnemy(getEnemyAgents(i));
   teams[i]->makeStep();
+
+  qDebug() << "Step stoped!";
 
   // Make a kick
   for( int c = 0; c < kickCube->size(); c++ )
@@ -107,6 +128,19 @@ void Environment::simulationStep( void )
     }
   }
   kickCube->clear();
+
+
+  if(teams[i]->getAgentsList().isEmpty() && realMap->isClear())
+  {
+    qDebug() << "Stoptime is" << stop_counter;
+    if(!stop_flag)
+    {
+      stop_flag = true;
+      emit simulationEnd(stop_counter);
+    }
+  }
+  else
+    stop_counter++;
 
   i++;
   if(i > teamCount-1)

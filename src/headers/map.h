@@ -243,6 +243,13 @@ public:
   */
   int updateInfectionState( void );
 
+  //! Clear check method.
+  /*!
+    \return true if all Map is uninfected
+            false if not
+  */
+  bool isClear( void );
+
 private:
   //! Create map method.
   /*!

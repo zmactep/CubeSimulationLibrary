@@ -404,3 +404,15 @@ int Map::updateInfectionState( void )
 
   return counter;
 }
+
+bool Map::isClear( void )
+{
+  for( int y = 0; y < levels; y++ )
+    for( int z = 0; z < height; z++ )
+      for(  int x = 0; x < width; x++ ) {
+        if(getInfection(x,y,z))
+          return false;
+      }
+
+  return true;
+}

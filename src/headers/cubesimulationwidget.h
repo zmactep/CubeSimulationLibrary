@@ -86,6 +86,12 @@ public slots:
   */
   void slot_toggleSimulation( void );
 
+  //! Change title slot
+  /*!
+    Changes widget title, when the simulation is over.
+  */
+  void slot_updateTitle( int value );
+
 private:
   //! Init Environment method
   /*!

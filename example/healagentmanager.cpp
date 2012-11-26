@@ -11,6 +11,7 @@ HealAgentManager::HealAgentManager(Map *map, AgentFactory *fact, int aCount) :
 
 void HealAgentManager::init()
 {
+  setType(AGENT_PARALLEL_TYPE);
 }
 
 unsigned char HealAgentManager::makePlan(int agentNum)
@@ -156,7 +157,7 @@ void HealAgentManager::getAllMapInfo()
 bool HealAgentManager::isEnemy(int x, int y, int z)
 {
   int buf[3];
-  for( int i = 0; i < enemy.length(); i++ )
+  for( int i = 0; i < enemy.size(); i++ )
   {
     subjMap->getCubeCoord(enemy[i], buf);
     if(buf[0] == x && buf[1] == y && buf[2] == z)
